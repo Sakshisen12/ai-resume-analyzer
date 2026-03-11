@@ -8,7 +8,7 @@ export const analysisQueue = new Queue('analysis', {
             type: 'exponential',
             delay: 1000,
         },
-        removeOnComplete: true,
+        removeOnComplete: { age: 300, count: 100 },
     },
 });
 //# sourceMappingURL=analysis.queue.js.map

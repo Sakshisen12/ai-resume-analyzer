@@ -1,6 +1,8 @@
 import Resume from '../models/Resume.js';
-import { analysisQueue } from '../queues/analysis.queue.js';
+import Analysis from '../models/Analysis.js';
+import * as aiService from '../services/ai.service.js';
 import { Job } from 'bullmq';
+import { analysisQueue } from '../queues/analysis.queue.js';
 import { AppError } from '../middleware/error.js';
 export const analyzeResume = async (req, res, next) => {
     try {
@@ -20,15 +22,19 @@ export const analyzeResume = async (req, res, next) => {
         if (!resume.parsedText) {
             return next(new AppError('Resume has no text to analyze', 400));
         }
-        const job = await analysisQueue.add('analyze-resume', {
-            resumeId: resume._id,
+        console.log(`Bypassing BullMQ: Processing AI analysis synchronously for ${resumeId}`);
+        // Process synchronously to bypass Redis connection issues
+        const analysisResult = await aiService.analyzeResume(resume.parsedText);
+        const analysis = await Analysis.create({
             userId: req.user._id,
+            resumeId: resume._id,
+            ...analysisResult,
         });
-        res.status(202).json({
+        res.status(200).json({
             status: 'success',
-            message: 'Resume analysis started in the background',
+            message: 'Resume analysis completed',
             data: {
-                jobId: job.id,
+                analysis
             },
         });
     }

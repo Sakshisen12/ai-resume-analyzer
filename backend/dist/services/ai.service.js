@@ -4,7 +4,8 @@ import { AppError } from '../middleware/error.js';
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 export const analyzeResume = async (resumeText) => {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        console.log('Sending request to Gemini API (gemini-2.5-flash)...');
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const prompt = `
       Analyze the following resume text and provide a detailed structured analysis in JSON format.
       
@@ -45,7 +46,8 @@ export const analyzeResume = async (resumeText) => {
 };
 export const matchJobDescription = async (resumeText, jobDescription) => {
     try {
-        const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+        console.log('Sending request to Gemini API (gemini-2.5-flash)...');
+        const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
         const prompt = `
       Compare the following resume text against the provided job description and provide a match analysis in JSON format.
       

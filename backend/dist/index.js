@@ -28,7 +28,7 @@ app.use('/api', limiter);
 // Body Parser
 app.use(express.json({ limit: '10kb' }));
 // Database Connection
-connectDB();
+await connectDB();
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/resume', resumeRoutes);
