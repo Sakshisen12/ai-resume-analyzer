@@ -5,6 +5,7 @@ export const getScoreColor = (score: number) => {
 };
 
 export const getScoreLabel = (score: number) => {
+  if (score === 0) return 'ANALYSIS PENDING'
   if (score >= 75) return 'STRONG'
   if (score >= 50) return 'GOOD'
   return 'NEEDS WORK'

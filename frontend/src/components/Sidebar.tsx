@@ -4,9 +4,15 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { navItems } from "@/lib/nav-items"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/context/AuthContext"
 
 export function Sidebar() {
   const pathname = usePathname()
+  const { user } = useAuth()
+
+  const userInitials = user?.name 
+    ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
+    : "???"
 
   return (
     <aside className="fixed left-0 top-0 z-40 hidden h-screen w-[240px] flex-col border-r border-border-subtle bg-bg-primary lg:flex">
@@ -40,11 +46,15 @@ export function Sidebar() {
       <div className="p-4 border-t border-border-subtle">
         <div className="flex items-center gap-3 px-4 py-2">
           <div className="h-8 w-8 rounded-md bg-bg-elevated border border-border-subtle flex items-center justify-center text-[10px] font-mono font-bold text-lime-accent">
-            JD
+            {userInitials}
           </div>
           <div className="flex flex-col">
-            <span className="text-xs font-bold text-text-primary">John Doe</span>
-            <span className="text-[10px] font-mono text-text-dim uppercase tracking-wider">Pro Plan</span>
+            <span className="text-xs font-bold text-text-primary truncate max-w-[120px]">
+              {user?.name || "Guest Entity"}
+            </span>
+            <span className="text-[10px] font-mono text-text-dim uppercase tracking-wider">
+              {user ? "Free Access" : "Guest"}
+            </span>
           </div>
         </div>
       </div>

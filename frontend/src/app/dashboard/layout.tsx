@@ -14,7 +14,7 @@ export default function DashboardLayout({
       {/* Sidebar for Desktop */}
       <Sidebar />
 
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col lg:pl-[240px]">
         {/* Navbar for Mobile & Header for Desktop */}
         <Navbar />
 
