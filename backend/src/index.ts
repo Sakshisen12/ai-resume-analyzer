@@ -49,7 +49,7 @@ app.get('/health', (req, res) => {
 // Centralized Error Handling
 app.use(errorHandler);
 
-const PORT = config.port;
-app.listen(PORT, () => {
+const PORT = config.port || 5000;
+app.listen(Number(PORT), '0.0.0.0', () => {
   console.log(`Server running in ${config.nodeEnv} mode on port ${PORT}`);
 });
