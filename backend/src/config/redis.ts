@@ -12,7 +12,7 @@ export const redisConnection = config.redisUrl
     });
 
 redisConnection.on('error', (error: any) => {
-  console.error('Redis Connection Error:', error);
+  console.error('Redis Connection Error - ensure Redis is running or REDIS_URL is set:', error.message || error);
 });
 
 redisConnection.on('connect', () => {
