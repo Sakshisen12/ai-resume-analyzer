@@ -10,7 +10,12 @@ import resumeRoutes from './routes/resume.routes.js';
 import aiRoutes from './routes/ai.routes.js';
 import jobRoutes from './routes/job.routes.js';
 import historyRoutes from './routes/history.routes.js';
-import './workers/analysis.worker.js';
+// Conditionally start worker if Redis is enabled
+if (config.useRedis) {
+  import('./workers/analysis.worker.js').catch(err => {
+    console.error('Failed to start worker:', err);
+  });
+}
 
 const app = express();
 

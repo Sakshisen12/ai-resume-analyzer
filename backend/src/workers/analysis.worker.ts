@@ -4,7 +4,7 @@ import * as aiService from '../services/ai.service.js';
 import Analysis from '../models/Analysis.js';
 import Resume from '../models/Resume.js';
 
-export const analysisWorker = new Worker(
+export const analysisWorker = redisConnection ? new Worker(
   'analysis',
   async (job: Job) => {
     const { resumeId, userId } = job.data;
@@ -35,12 +35,14 @@ export const analysisWorker = new Worker(
     connection: redisConnection,
     concurrency: 5,
   }
-);
+) : null;
 
-analysisWorker.on('completed', (job) => {
-  console.log(`Job ${job.id} has completed!`);
-});
+if (analysisWorker) {
+  analysisWorker.on('completed', (job) => {
+    console.log(`Job ${job.id} has completed!`);
+  });
 
-analysisWorker.on('failed', (job, err) => {
-  console.error(`Job ${job?.id} has failed with ${err.message}`);
-});
+  analysisWorker.on('failed', (job, err) => {
+    console.error(`Job ${job?.id} has failed with ${err.message}`);
+  });
+}

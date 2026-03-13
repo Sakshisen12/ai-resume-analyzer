@@ -61,7 +61,10 @@ export const getJobStatus = async (req: Request, res: Response, next: NextFuncti
       return next(new AppError('Please provide a job ID', 400));
     }
 
-    const job = await Job.fromId(analysisQueue, jobId as string);
+    if (!analysisQueue) {
+      return next(new AppError('Background queue is not available on this server', 503));
+    }
+    const job = await (Job as any).fromId(analysisQueue, jobId as string);
 
     if (!job) {
       return next(new AppError('Job not found', 404));
