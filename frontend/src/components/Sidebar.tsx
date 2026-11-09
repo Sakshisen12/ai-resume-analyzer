@@ -8,7 +8,7 @@ import { useAuth } from "@/context/AuthContext"
 
 export function Sidebar() {
   const pathname = usePathname()
-  const { user } = useAuth()
+  const { user, logout } = useAuth()
 
   const userInitials = user?.name 
     ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2)
@@ -24,6 +24,19 @@ export function Sidebar() {
       
       <nav className="flex-1 space-y-1 px-4 py-4">
         {navItems.map((item) => {
+          if (item.label === "Logout") {
+            return (
+              <button
+                key={item.label}
+                onClick={logout}
+                className="group flex w-full items-center gap-3 rounded-md px-4 py-3 text-sm font-mono uppercase tracking-widest text-text-dim hover:bg-red-500/10 hover:text-red-400 transition-colors cursor-pointer text-left"
+              >
+                <item.icon size={18} className="text-text-dim group-hover:text-red-400 transition-colors" />
+                {item.label}
+              </button>
+            )
+          }
+
           const isActive = pathname === item.href
           return (
             <Link

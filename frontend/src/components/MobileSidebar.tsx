@@ -5,6 +5,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { navItems } from "@/lib/nav-items"
 import { cn } from "@/lib/utils"
+import { useAuth } from "@/context/AuthContext"
 import {
   Sheet,
   SheetContent,
@@ -14,6 +15,7 @@ import {
 
 export function MobileSidebar() {
   const pathname = usePathname()
+  const { logout } = useAuth()
 
   return (
     <Sheet>
@@ -36,9 +38,23 @@ export function MobileSidebar() {
         
         <nav className="flex-1 space-y-1 px-4 py-6">
           {navItems.map((item) => {
+            if (item.label === "Logout") {
+              return (
+                <SheetClose key={item.label} render={
+                  <button
+                    onClick={logout}
+                    className="w-full group flex items-center gap-3 rounded-md px-4 py-4 text-sm font-mono uppercase tracking-widest text-text-dim hover:bg-red-500/10 hover:text-red-400 transition-colors cursor-pointer text-left"
+                  >
+                    <item.icon size={18} className="text-text-dim group-hover:text-red-400 transition-colors" />
+                    {item.label}
+                  </button>
+                } />
+              )
+            }
+
             const isActive = pathname === item.href
             return (
-              <SheetClose key={item.href}>
+              <SheetClose key={item.href} render={
                 <Link
                   href={item.href}
                   className={cn(
@@ -51,7 +67,7 @@ export function MobileSidebar() {
                   <item.icon size={18} className={cn(isActive ? "text-lime-accent" : "text-text-dim group-hover:text-text-primary")} />
                   {item.label}
                 </Link>
-              </SheetClose>
+              } />
             )
           })}
         </nav>
