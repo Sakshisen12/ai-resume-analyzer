@@ -22,8 +22,8 @@ export interface IJobMatchResult {
 
 export const analyzeResume = async (resumeText: string): Promise<IAnalysisResult> => {
   try {
-    console.log('Sending request to Gemini API (gemini-2.5-flash)...');
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    console.log('Sending request to Gemini API (gemini-2.0-flash)...');
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const prompt = `
       Analyze the following resume text and provide a detailed structured analysis in JSON format.
@@ -68,8 +68,8 @@ export const matchJobDescription = async (
   jobDescription: string
 ): Promise<IJobMatchResult> => {
   try {
-    console.log('Sending request to Gemini API (gemini-2.5-flash)...');
-    const model = genAI.getGenerativeModel({ model: 'gemini-2.5-flash' });
+    console.log('Sending request to Gemini API (gemini-2.0-flash)...');
+    const model = genAI.getGenerativeModel({ model: 'gemini-2.0-flash' });
 
     const prompt = `
       Compare the following resume text against the provided job description and provide a match analysis in JSON format.

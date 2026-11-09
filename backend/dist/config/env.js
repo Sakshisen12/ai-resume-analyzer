@@ -7,7 +7,7 @@ export const config = {
     jwtSecret: process.env.JWT_SECRET || 'secret',
     nodeEnv: process.env.NODE_ENV || 'production',
     corsOrigin: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || '*',
-    geminiApiKey: process.env.OPENAI_API_KEY || process.env.GEMINI_API_KEY || '',
+    geminiApiKey: process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY || '',
     // Redis configuration
     useRedis: !!(process.env.REDIS_URL || process.env.REDIS_HOST),
     redisUrl: process.env.REDIS_URL || '',
