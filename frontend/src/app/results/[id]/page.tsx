@@ -22,7 +22,11 @@ import {
   TrendingUp,
   History as HistoryIcon,
   ChevronRight,
-  ShieldAlert
+  ShieldAlert,
+  ShieldCheck,
+  Sparkles,
+  CheckCircle2,
+  AlertCircle
 } from 'lucide-react';
 import { SkillsRadarChart, ScoreBarChart } from '@/components/AnalyticsCharts';
 
@@ -176,166 +180,267 @@ export default function ResultsPage() {
           </div>
         </div>
 
-        <div className="grid gap-12 lg:grid-cols-[1fr_380px]">
-          {/* Main Results Column */}
-          <div className="space-y-16">
-            {/* Top Score Row */}
-            <div className="grid gap-6 sm:grid-cols-2">
-              <Card className="bg-bg-secondary border-border-subtle flex flex-col items-center justify-center p-10 text-center relative overflow-hidden">
-                <div className="absolute top-0 right-0 p-4 opacity-5">
-                  <TrendingUp size={120} />
-                </div>
-                <ScoreRing score={analysis?.resumeScore || 0} size={180} className="mb-1" />
-                <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-text-dim mt-4">OVERALL PERFORMANCE</p>
-              </Card>
-
-              <Card className="bg-bg-secondary border-border-subtle p-10 flex flex-col justify-between group">
-                <div className="space-y-6">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim">ATS COMPATIBILITY</span>
-                    <span className="text-2xl font-display font-black text-text-primary italic">{analysis?.atsCompatibilityScore}%</span>
-                  </div>
-                  <ProgressBar label="PARSING STRENGTH" value={analysis?.atsCompatibilityScore || 0} className="w-full" />
-                </div>
-                <div className="pt-8 border-t border-border-subtle/50 space-y-4">
-                  <p className="text-[11px] font-mono font-bold uppercase tracking-widest text-text-dim leading-relaxed">
-                    YOUR RESUME IS {analysis?.atsCompatibilityScore && analysis.atsCompatibilityScore > 80 ? 'HIGHLY' : 'MODERATELY'} OPTIMIZED FOR MACHINE READABILITY.
-                  </p>
-                </div>
-              </Card>
+        {/* Top Executive Score Cards - 3 Columns */}
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3 mb-12">
+          {/* Card 1: Overall Performance */}
+          <Card className="bg-bg-secondary border-border-subtle flex flex-col items-center justify-center p-8 text-center relative overflow-hidden">
+            <div className="absolute top-0 right-0 p-4 opacity-5">
+              <TrendingUp size={100} />
             </div>
+            <ScoreRing score={analysis?.resumeScore || 0} size={160} className="mb-2" />
+            <p className="font-mono text-[10px] font-bold uppercase tracking-[0.2em] text-text-dim mt-2">
+              OVERALL PERFORMANCE
+            </p>
+            <span className="mt-3 px-3 py-1 bg-lime-accent/10 border border-lime-accent/30 text-lime-accent text-[10px] font-mono font-bold tracking-widest uppercase rounded-full">
+              {analysis?.resumeScore && analysis.resumeScore >= 80 ? 'EXCELLENT PROFILE' : analysis?.resumeScore && analysis.resumeScore >= 60 ? 'COMPETITIVE PROFILE' : 'NEEDS OPTIMIZATION'}
+            </span>
+          </Card>
 
-            {/* Analysis Tabs Section */}
-            <div className="space-y-8">
-              <Tabs defaultValue="overview" className="w-full">
-                <TabsList className="mb-10">
-                  <TabsTrigger value="overview">OVERVIEW</TabsTrigger>
-                  <TabsTrigger value="skills">SKILLS & GAPS</TabsTrigger>
-                  <TabsTrigger value="suggestions">SUGGESTIONS</TabsTrigger>
-                </TabsList>
-                
-                <TabsContent value="overview" className="mt-0">
-                  <Card className="border-border-subtle bg-bg-secondary overflow-hidden">
-                    <CardContent className="p-0">
-                      <div className="border-b border-border-subtle p-6 lg:p-8 bg-bg-elevated/20">
-                        <div className="flex items-center gap-3 mb-4">
-                          <Zap size={18} className="text-lime-accent" />
-                          <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">EXPERIENCE STRENGTH</h3>
-                        </div>
-                        <p className="font-body text-sm md:text-base text-text-secondary leading-relaxed border-l-2 border-lime-accent pl-4 py-1">
-                          {analysis?.experienceStrength}
-                        </p>
-                      </div>
-                      <div className="p-8 grid gap-8 sm:grid-cols-2">
-                         <div className="space-y-12">
-                            <Card className="bg-bg-primary border-border-subtle p-6">
-                             <BarChart3 size={20} className="mb-4 text-text-dim" />
-                             <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest mb-4">SCORE METRICS</h4>
-                             <ScoreBarChart 
-                                data={[
-                                  { name: 'RESUME', score: analysis?.resumeScore || 0 },
-                                  { name: 'ATS', score: analysis?.atsCompatibilityScore || 0 }
-                                ]} 
-                              />
-                            </Card>
-                         </div>
-                         <div className="space-y-4">
-                            <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">QUICK WIN</h4>
-                            <p className="text-sm text-text-secondary leading-relaxed uppercase tracking-wider">
-                              UPDATE YOUR CONTACT INFORMATION TO ENSURE ATS SYSTEMS CAN REACH YOU IN SECONDS.
-                            </p>
-                            <Button variant="ghost" className="text-[10px] font-bold tracking-widest p-0 border-none hover:bg-transparent hover:text-lime-accent">
-                              LEARN MORE <ChevronRight size={14} className="ml-1" />
-                            </Button>
-                         </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </TabsContent>
-
-                <TabsContent value="skills" className="mt-0 space-y-12">
-                  <div className="grid gap-12 sm:grid-cols-2">
-                    <div className="space-y-6">
-                      <h3 className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim flex items-center gap-2">
-                        DETECTED COMPETENCIES
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {analysis?.skillsDetected.map((skill) => (
-                          <SkillTag key={skill} skill={skill} status="detected" />
-                        ))}
-                      </div>
-                    </div>
-
-                    <div className="space-y-6">
-                      <h3 className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim text-red-500">
-                        CRITICAL GAPS
-                      </h3>
-                      <div className="flex flex-wrap gap-2">
-                        {analysis?.missingSkills.map((skill) => (
-                          <SkillTag key={skill} skill={skill} status="gap" />
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                </TabsContent>
-
-                <TabsContent value="suggestions" className="mt-0">
-                  <div className="grid gap-4">
-                    {analysis?.improvementSuggestions.map((suggestion, idx) => (
-                      <div key={idx} className="group flex gap-6 p-8 bg-bg-secondary border border-border-subtle hover:border-lime-accent transition-colors">
-                        <span className="font-display text-2xl font-black text-text-dim/20 group-hover:text-lime-accent transition-colors italic">
-                          {(idx + 1).toString().padStart(2, '0')}
-                        </span>
-                        <p className="text-text-primary text-sm font-medium leading-relaxed uppercase tracking-wide">
-                          {suggestion}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </TabsContent>
-              </Tabs>
-            </div>
-          </div>
-
-          {/* Right Sidebar */}
-          <div className="space-y-12">
-            <Card className="bg-lime-accent text-black border-none sticky top-28">
-              <CardContent className="p-10 space-y-8">
-                <div className="flex items-center gap-3">
-                  <HistoryIcon size={20} />
-                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest">VERSION CONTROL</span>
-                </div>
-                <div className="space-y-2">
-                  <p className="text-4xl font-display font-black tracking-tighter italic leading-none">SNAPSHOT SAVED.</p>
-                  <p className="text-sm font-medium leading-relaxed uppercase">YOUR PERFORMANCE HAS BEEN RECORDED IN THE HISTORY LOG.</p>
-                </div>
-                <Link href="/history" className="block pt-2">
-                  <Button variant="ghost" className="w-full justify-between p-0 font-bold tracking-widest text-[10px] border-black/10 hover:bg-black/5 hover:text-black">
-                    VIEW ALL VERSIONS <ChevronRight size={14} />
-                  </Button>
-                </Link>
-              </CardContent>
-            </Card>
-
+          {/* Card 2: ATS Compatibility */}
+          <Card className="bg-bg-secondary border-border-subtle p-8 flex flex-col justify-between">
             <div className="space-y-6">
-              <h3 className="text-[10px] font-mono font-bold uppercase tracking-[0.2em] text-text-dim">
-                DATA INSIGHTS
-              </h3>
-              <Card className="bg-bg-secondary border-border-subtle p-6">
-                <SkillsRadarChart 
-                  skills={analysis?.skillsDetected.slice(0, 5).map(skill => ({
-                    name: skill,
-                    value: 80 + Math.random() * 20
-                  })) || []} 
-                />
-              </Card>
-              <div className="p-4 border border-border-subtle bg-bg-elevated/10 rounded-md">
-                 <p className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim leading-relaxed">
-                   AI CONFIDENCE SCORE: 98.4%
-                 </p>
+              <div className="flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim block">
+                    ATS COMPATIBILITY
+                  </span>
+                  <span className="text-3xl font-display font-black text-text-primary italic">
+                    {analysis?.atsCompatibilityScore}%
+                  </span>
+                </div>
+                <div className="h-10 w-10 rounded-md bg-bg-elevated border border-border-subtle flex items-center justify-center text-lime-accent">
+                  <ShieldCheck size={20} />
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <ProgressBar label="PARSING STRENGTH" value={analysis?.atsCompatibilityScore || 0} className="w-full" />
               </div>
             </div>
-          </div>
+
+            <div className="pt-6 border-t border-border-subtle/50 space-y-2">
+              <p className="text-[11px] font-mono font-medium text-text-secondary leading-relaxed">
+                Your resume is <strong className="text-lime-accent font-bold">{analysis?.atsCompatibilityScore && analysis.atsCompatibilityScore >= 80 ? 'highly optimized' : 'partially optimized'}</strong> for automated applicant tracking systems.
+              </p>
+            </div>
+          </Card>
+
+          {/* Card 3: Competency Radar Insights */}
+          <Card className="bg-bg-secondary border-border-subtle p-6 flex flex-col justify-between md:col-span-2 lg:col-span-1">
+            <div className="flex items-center justify-between mb-2">
+              <div className="flex items-center gap-2">
+                <BarChart3 size={16} className="text-lime-accent" />
+                <span className="text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim">
+                  SKILLS RADAR
+                </span>
+              </div>
+              <span className="text-[10px] font-mono text-text-dim uppercase tracking-wider">
+                {analysis?.skillsDetected.length || 0} Identified
+              </span>
+            </div>
+
+            <div className="py-1">
+              <SkillsRadarChart 
+                skills={analysis?.skillsDetected.slice(0, 5).map(skill => ({
+                  name: skill,
+                  value: 80 + Math.random() * 20
+                })) || []} 
+              />
+            </div>
+
+            <div className="pt-4 border-t border-border-subtle/50 flex items-center justify-between text-[10px] font-mono text-text-dim">
+              <span>AI CONFIDENCE</span>
+              <span className="text-lime-accent font-bold">98.4%</span>
+            </div>
+          </Card>
+        </div>
+
+        {/* Full-Width Analysis Tabs Section */}
+        <div className="w-full space-y-6">
+          <Tabs defaultValue="overview" className="w-full">
+            <TabsList className="mb-8 border-b border-border-subtle pb-px gap-4 flex-wrap">
+              <TabsTrigger value="overview" className="flex items-center gap-2 pb-3">
+                <Zap size={14} /> OVERVIEW & IMPACT
+              </TabsTrigger>
+              <TabsTrigger value="skills" className="flex items-center gap-2 pb-3">
+                <Target size={14} /> SKILLS & GAPS
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-bg-elevated text-[10px] font-mono font-bold">
+                  {analysis?.skillsDetected.length || 0} / {analysis?.missingSkills.length || 0}
+                </span>
+              </TabsTrigger>
+              <TabsTrigger value="suggestions" className="flex items-center gap-2 pb-3">
+                <Sparkles size={14} /> ACTIONABLE SUGGESTIONS
+                <span className="ml-1 px-2 py-0.5 rounded-full bg-lime-accent/10 text-lime-accent text-[10px] font-mono font-bold">
+                  {analysis?.improvementSuggestions.length || 0}
+                </span>
+              </TabsTrigger>
+            </TabsList>
+            
+            {/* Tab 1: Overview */}
+            <TabsContent value="overview" className="space-y-6">
+              <Card className="border-border-subtle bg-bg-secondary overflow-hidden">
+                <CardContent className="p-0">
+                  <div className="border-b border-border-subtle p-6 lg:p-8 bg-bg-elevated/20">
+                    <div className="flex items-center gap-2 mb-4">
+                      <Zap size={16} className="text-lime-accent" />
+                      <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">
+                        AI EXPERIENCE EVALUATION
+                      </h3>
+                    </div>
+                    <p className="font-body text-base lg:text-lg text-text-primary leading-relaxed border-l-2 border-lime-accent pl-5 py-1">
+                      {analysis?.experienceStrength}
+                    </p>
+                  </div>
+
+                  <div className="p-6 lg:p-8 grid gap-8 md:grid-cols-2">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 mb-2">
+                        <BarChart3 size={16} className="text-lime-accent" />
+                        <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">
+                          SCORE METRICS COMPARISON
+                        </h4>
+                      </div>
+                      <Card className="bg-bg-primary border-border-subtle p-6">
+                        <ScoreBarChart 
+                          data={[
+                            { name: 'RESUME SCORE', score: analysis?.resumeScore || 0 },
+                            { name: 'ATS MATCH', score: analysis?.atsCompatibilityScore || 0 }
+                          ]} 
+                        />
+                      </Card>
+                    </div>
+
+                    <div className="space-y-4 flex flex-col justify-between">
+                      <div>
+                        <div className="flex items-center gap-2 mb-4">
+                          <CheckCircle2 size={16} className="text-lime-accent" />
+                          <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">
+                            RECOMMENDED NEXT STEPS
+                          </h4>
+                        </div>
+                        <div className="space-y-3">
+                          <div className="p-4 rounded-md border border-border-subtle bg-bg-primary/50 text-xs text-text-secondary leading-relaxed">
+                            <strong className="text-text-primary block mb-1">Tailor for Specific Roles:</strong>
+                            Use the <span className="text-lime-accent font-mono font-bold">Job Matcher</span> to compare this resume directly against job postings to find missing keywords.
+                          </div>
+                          <div className="p-4 rounded-md border border-border-subtle bg-bg-primary/50 text-xs text-text-secondary leading-relaxed">
+                            <strong className="text-text-primary block mb-1">Track Version Improvements:</strong>
+                            Every time you make edits and re-upload, your progress is saved to version history so you can measure your score boost.
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="pt-4 flex gap-4">
+                        <Link href={`/match?resumeId=${id}`} className="flex-1">
+                          <Button variant="primary" className="w-full tracking-widest text-xs h-12">
+                            START JOB MATCH <Target className="ml-2 h-4 w-4" />
+                          </Button>
+                        </Link>
+                        <Link href="/history">
+                          <Button variant="secondary" className="tracking-widest text-xs h-12 px-6">
+                            <HistoryIcon className="mr-2 h-4 w-4" /> HISTORY
+                          </Button>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Tab 2: Skills & Gaps */}
+            <TabsContent value="skills" className="space-y-6">
+              <div className="grid gap-6 lg:grid-cols-2">
+                {/* Detected Competencies Card */}
+                <Card className="bg-bg-secondary border-border-subtle overflow-hidden">
+                  <div className="p-6 border-b border-border-subtle bg-bg-elevated/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck size={18} className="text-lime-accent" />
+                      <h3 className="text-xs font-mono font-bold uppercase tracking-widest text-text-primary">
+                        DETECTED COMPETENCIES
+                      </h3>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full bg-lime-accent/10 border border-lime-accent/30 text-lime-accent text-[10px] font-mono font-bold">
+                      {analysis?.skillsDetected.length || 0} IDENTIFIED
+                    </span>
+                  </div>
+                  <CardContent className="p-6">
+                    <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+                      These technical skills and competencies were successfully extracted by the parser:
+                    </p>
+                    <div className="flex flex-wrap gap-2.5">
+                      {analysis?.skillsDetected.map((skill) => (
+                        <SkillTag key={skill} skill={skill} status="detected" />
+                      ))}
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Critical Gaps Card */}
+                <Card className="bg-bg-secondary border-border-subtle overflow-hidden">
+                  <div className="p-6 border-b border-border-subtle bg-bg-elevated/10 flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <ShieldAlert size={18} className="text-red-400" />
+                      <h3 className="text-xs font-mono font-bold uppercase tracking-widest text-red-400">
+                        CRITICAL SKILL GAPS
+                      </h3>
+                    </div>
+                    <span className="px-2.5 py-1 rounded-full bg-red-500/10 border border-red-500/30 text-red-400 text-[10px] font-mono font-bold">
+                      {analysis?.missingSkills.length || 0} MISSING
+                    </span>
+                  </div>
+                  <CardContent className="p-6">
+                    <p className="text-xs text-text-secondary mb-4 leading-relaxed">
+                      Adding these industry-standard keywords could significantly boost ATS filtering results:
+                    </p>
+                    <div className="flex flex-wrap gap-2.5 mb-6">
+                      {analysis?.missingSkills.map((skill) => (
+                        <SkillTag key={skill} skill={skill} status="gap" />
+                      ))}
+                    </div>
+                    <div className="p-4 rounded-md bg-bg-primary/50 border border-border-subtle flex items-start gap-3">
+                      <AlertCircle size={16} className="text-text-dim shrink-0 mt-0.5" />
+                      <p className="text-[11px] text-text-dim leading-relaxed">
+                        Tip: Incorporate these missing competencies into your projects or work experience bullets with measurable metrics.
+                      </p>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </TabsContent>
+
+            {/* Tab 3: Actionable Suggestions */}
+            <TabsContent value="suggestions" className="space-y-4">
+              <div className="grid gap-4">
+                {analysis?.improvementSuggestions.map((suggestion, idx) => (
+                  <div 
+                    key={idx} 
+                    className="group flex flex-col sm:flex-row sm:items-start gap-4 sm:gap-6 p-6 lg:p-8 bg-bg-secondary border border-border-subtle hover:border-lime-accent rounded-md transition-all duration-200"
+                  >
+                    <div className="flex items-center gap-3 sm:block shrink-0">
+                      <span className="font-display text-2xl lg:text-3xl font-black text-lime-accent/50 group-hover:text-lime-accent transition-colors italic">
+                        {(idx + 1).toString().padStart(2, '0')}
+                      </span>
+                      <span className="sm:hidden px-2 py-0.5 rounded bg-bg-elevated text-[9px] font-mono text-text-dim uppercase tracking-wider">
+                        Recommendation
+                      </span>
+                    </div>
+                    
+                    <div className="space-y-2 flex-1">
+                      <div className="hidden sm:flex items-center gap-2">
+                        <span className="px-2 py-0.5 rounded bg-bg-elevated border border-border-subtle text-[9px] font-mono font-bold text-text-dim uppercase tracking-wider">
+                          PRIORITY ACTION {idx + 1}
+                        </span>
+                      </div>
+                      <p className="text-text-primary text-sm font-normal leading-relaxed">
+                        {suggestion}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </TabsContent>
+          </Tabs>
         </div>
       </main>
     </div>
