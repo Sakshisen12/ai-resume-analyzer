@@ -3,7 +3,7 @@ import { redisConnection } from '../config/redis.js';
 import * as aiService from '../services/ai.service.js';
 import Analysis from '../models/Analysis.js';
 import Resume from '../models/Resume.js';
-export const analysisWorker = new Worker('analysis', async (job) => {
+export const analysisWorker = redisConnection ? new Worker('analysis', async (job) => {
     const { resumeId, userId } = job.data;
     console.log(`Processing analysis for resume: ${resumeId}`);
     try {
@@ -27,11 +27,13 @@ export const analysisWorker = new Worker('analysis', async (job) => {
 }, {
     connection: redisConnection,
     concurrency: 5,
-});
-analysisWorker.on('completed', (job) => {
-    console.log(`Job ${job.id} has completed!`);
-});
-analysisWorker.on('failed', (job, err) => {
-    console.error(`Job ${job?.id} has failed with ${err.message}`);
-});
+}) : null;
+if (analysisWorker) {
+    analysisWorker.on('completed', (job) => {
+        console.log(`Job ${job.id} has completed!`);
+    });
+    analysisWorker.on('failed', (job, err) => {
+        console.error(`Job ${job?.id} has failed with ${err.message}`);
+    });
+}
 //# sourceMappingURL=analysis.worker.js.map

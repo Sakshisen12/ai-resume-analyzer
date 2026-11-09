@@ -1,6 +1,6 @@
 import { Queue } from 'bullmq';
 import { redisConnection } from '../config/redis.js';
-export const analysisQueue = new Queue('analysis', {
+export const analysisQueue = redisConnection ? new Queue('analysis', {
     connection: redisConnection,
     defaultJobOptions: {
         attempts: 3,
@@ -10,5 +10,5 @@ export const analysisQueue = new Queue('analysis', {
         },
         removeOnComplete: { age: 300, count: 100 },
     },
-});
+}) : null;
 //# sourceMappingURL=analysis.queue.js.map

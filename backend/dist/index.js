@@ -10,7 +10,12 @@ import resumeRoutes from './routes/resume.routes.js';
 import aiRoutes from './routes/ai.routes.js';
 import jobRoutes from './routes/job.routes.js';
 import historyRoutes from './routes/history.routes.js';
-import './workers/analysis.worker.js';
+// Conditionally start worker if Redis is enabled
+if (config.useRedis) {
+    import('./workers/analysis.worker.js').catch(err => {
+        console.error('Failed to start worker:', err);
+    });
+}
 const app = express();
 // Security Middleware
 app.use(helmet());
@@ -40,8 +45,8 @@ app.get('/health', (req, res) => {
 });
 // Centralized Error Handling
 app.use(errorHandler);
-const PORT = config.port;
-app.listen(PORT, () => {
+const PORT = config.port || 5000;
+app.listen(Number(PORT), '0.0.0.0', () => {
     console.log(`Server running in ${config.nodeEnv} mode on port ${PORT}`);
 });
 //# sourceMappingURL=index.js.map
