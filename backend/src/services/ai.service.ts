@@ -4,6 +4,33 @@ import { AppError } from '../middleware/error.js';
 
 const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 
+const CANDIDATE_MODELS = [
+  'gemini-2.5-flash',
+  'gemini-2.5-flash-lite',
+  'gemini-flash-latest',
+];
+
+const generateContentWithFallback = async (prompt: string): Promise<string> => {
+  let lastError: any = null;
+
+  for (const modelName of CANDIDATE_MODELS) {
+    try {
+      console.log(`Attempting Gemini generation with model: ${modelName}...`);
+      const model = genAI.getGenerativeModel({ model: modelName });
+      const result = await model.generateContent(prompt);
+      const response = await result.response;
+      return response.text();
+    } catch (error: any) {
+      console.warn(`Model ${modelName} error: ${error.message || error}`);
+      lastError = error;
+      // Try next model if overloaded, rate-limited, or unavailable
+      continue;
+    }
+  }
+
+  throw lastError || new AppError('All Gemini models are currently unavailable', 503);
+};
+
 export interface IAnalysisResult {
   resumeScore: number;
   skillsDetected: string[];
@@ -22,9 +49,6 @@ export interface IJobMatchResult {
 
 export const analyzeResume = async (resumeText: string): Promise<IAnalysisResult> => {
   try {
-    console.log('Sending request to Gemini API (gemini-3.8-flash)...');
-    const model = genAI.getGenerativeModel({ model: 'gemini-3.8-flash' });
-
     const prompt = `
       Analyze the following resume text and provide a detailed structured analysis in JSON format.
       
@@ -43,9 +67,7 @@ export const analyzeResume = async (resumeText: string): Promise<IAnalysisResult
       ${resumeText}
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await generateContentWithFallback(prompt);
     
     // Clean potential markdown code blocks from the response
     const jsonStr = text.replace(/```json|```/gi, '').trim();
@@ -63,14 +85,12 @@ export const analyzeResume = async (resumeText: string): Promise<IAnalysisResult
     throw new AppError(error.message || 'Error occurred during AI analysis', 500);
   }
 };
+
 export const matchJobDescription = async (
   resumeText: string,
   jobDescription: string
 ): Promise<IJobMatchResult> => {
   try {
-    console.log('Sending request to Gemini API (gemini-3.8-flash)...');
-    const model = genAI.getGenerativeModel({ model: 'gemini-3.8-flash' });
-
     const prompt = `
       Compare the following resume text against the provided job description and provide a match analysis in JSON format.
       
@@ -90,9 +110,7 @@ export const matchJobDescription = async (
       ${resumeText}
     `;
 
-    const result = await model.generateContent(prompt);
-    const response = await result.response;
-    const text = response.text();
+    const text = await generateContentWithFallback(prompt);
 
     const jsonStr = text.replace(/```json|```/gi, '').trim();
 
