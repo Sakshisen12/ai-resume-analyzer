@@ -47,6 +47,10 @@ app.use('/api/ai', aiRoutes);
 app.use('/api/job', jobRoutes);
 app.use('/api/history', historyRoutes);
 
+app.get('/', (req, res) => {
+  res.status(200).json({ status: 'success', message: 'Resume AI Backend API is running' });
+});
+
 app.get('/health', (req, res) => {
   res.status(200).json({ status: 'success', message: 'Server is healthy' });
 });
