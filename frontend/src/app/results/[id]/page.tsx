@@ -159,13 +159,6 @@ export default function ResultsPage() {
       <Navbar />
 
       <main className="flex-1 max-w-[1280px] mx-auto px-4 py-8 lg:px-8 lg:py-12 w-full">
-        {/* TEMPORARY VERIFICATION BANNER — remove after fix confirmed */}
-        <div className="mb-6 p-3 border border-lime-accent rounded-sm font-mono text-xs text-lime-accent">
-          ✓ RESULTS LOADED SUCCESSFULLY
-          <span className="ml-4 text-text-dim">
-            ID: {id as string} | Score: {analysis?.resumeScore}
-          </span>
-        </div>
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="space-y-4">
             <Link href="/dashboard" className="inline-flex items-center text-[10px] font-mono font-bold uppercase tracking-widest text-text-dim hover:text-lime-accent transition-colors">
@@ -224,13 +217,13 @@ export default function ResultsPage() {
                 <TabsContent value="overview" className="mt-0">
                   <Card className="border-border-subtle bg-bg-secondary overflow-hidden">
                     <CardContent className="p-0">
-                      <div className="border-b border-border-subtle p-8 bg-bg-elevated/20">
-                        <div className="flex items-center gap-3 mb-6">
+                      <div className="border-b border-border-subtle p-6 lg:p-8 bg-bg-elevated/20">
+                        <div className="flex items-center gap-3 mb-4">
                           <Zap size={18} className="text-lime-accent" />
-                          <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest">EXPERIENCE STRENGTH</h3>
+                          <h3 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">EXPERIENCE STRENGTH</h3>
                         </div>
-                        <p className="font-display text-2xl font-bold tracking-tight text-text-primary uppercase leading-[1.3] md:text-3xl italic">
-                          "{analysis?.experienceStrength}"
+                        <p className="font-body text-sm md:text-base text-text-secondary leading-relaxed border-l-2 border-lime-accent pl-4 py-1">
+                          {analysis?.experienceStrength}
                         </p>
                       </div>
                       <div className="p-8 grid gap-8 sm:grid-cols-2">

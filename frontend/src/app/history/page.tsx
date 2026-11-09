@@ -64,7 +64,7 @@ function HistoryContent() {
   return (
     <div className="min-h-screen bg-bg-primary lg:flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col lg:pl-[240px]">
         <Navbar />
         <main className="flex-1 max-w-[1280px] mx-auto px-4 py-8 lg:px-8 lg:py-12 w-full pb-28 lg:pb-12">
           <div className="flex flex-col gap-16">

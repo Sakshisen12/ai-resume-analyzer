@@ -69,7 +69,7 @@ function JobMatchContent() {
   return (
     <div className="min-h-screen bg-bg-primary lg:flex">
       <Sidebar />
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col lg:pl-[240px]">
         <Navbar />
         <main className="flex-1 max-w-[1280px] mx-auto px-4 py-8 lg:px-8 lg:py-12 w-full pb-28 lg:pb-12">
           <div className="flex flex-col gap-12">
@@ -158,8 +158,8 @@ function JobMatchContent() {
                       <div className="space-y-4">
                         <h4 className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">CRITICAL GAP ANALYSIS</h4>
                         <div className="p-6 bg-bg-secondary border border-border-subtle">
-                           <p className="text-sm font-medium leading-relaxed text-text-primary uppercase tracking-wide">
-                             "{result.skillGapAnalysis}"
+                           <p className="text-sm font-normal leading-relaxed text-text-secondary">
+                             {result.skillGapAnalysis}
                            </p>
                         </div>
                       </div>
