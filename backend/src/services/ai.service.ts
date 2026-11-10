@@ -7,28 +7,43 @@ const genAI = new GoogleGenerativeAI(config.geminiApiKey);
 const CANDIDATE_MODELS = [
   'gemini-2.5-flash',
   'gemini-2.5-flash-lite',
-  'gemini-flash-latest',
+  'gemini-flash-lite-latest',
+  'gemini-3.5-flash-lite',
+  'gemini-3.5-flash',
+  'gemini-2.5-pro',
 ];
+
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 const generateContentWithFallback = async (prompt: string): Promise<string> => {
   let lastError: any = null;
 
   for (const modelName of CANDIDATE_MODELS) {
-    try {
-      console.log(`Attempting Gemini generation with model: ${modelName}...`);
-      const model = genAI.getGenerativeModel({ model: modelName });
-      const result = await model.generateContent(prompt);
-      const response = await result.response;
-      return response.text();
-    } catch (error: any) {
-      console.warn(`Model ${modelName} error: ${error.message || error}`);
-      lastError = error;
-      // Try next model if overloaded, rate-limited, or unavailable
-      continue;
+    // Retry up to 2 times per model with backoff if it hits a 503 or 429
+    for (let attempt = 1; attempt <= 2; attempt++) {
+      try {
+        console.log(`Attempting Gemini generation with model: ${modelName} (attempt ${attempt})...`);
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const result = await model.generateContent(prompt);
+        const response = await result.response;
+        return response.text();
+      } catch (error: any) {
+        lastError = error;
+        const msg = String(error.message || error);
+        console.warn(`Model ${modelName} attempt ${attempt} error: ${msg}`);
+
+        // If it's a 503 (high demand) or 429 (rate limit), wait briefly before retrying
+        if (msg.includes('503') || msg.includes('429') || msg.includes('high demand') || msg.includes('Service Unavailable')) {
+          await sleep(1500 * attempt);
+        } else {
+          // If it's a 404 or other non-transient error, break immediately to next model
+          break;
+        }
+      }
     }
   }
 
-  throw lastError || new AppError('All Gemini models are currently unavailable', 503);
+  throw lastError || new AppError('All Gemini models are currently experiencing high demand. Please try again in a few moments.', 503);
 };
 
 export interface IAnalysisResult {
