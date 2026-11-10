@@ -1,10 +1,10 @@
 # 🎯 RESUME AI | Intelligent Resume & Job Match Analyzer
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-6.0-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?style=for-the-badge&logo=javascript)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![Tailwind CSS v4](https://img.shields.io/badge/Tailwind_CSS-v4-38B2AC?style=for-the-badge&logo=tailwind-css)](https://tailwindcss.com/)
 [![Google Gemini](https://img.shields.io/badge/Google_Gemini-2.5_Flash-4285F4?style=for-the-badge&logo=google)](https://aistudio.google.com/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb)](https://www.mongodb.com/)
 
 **Land your dream job with real-time AI resume analysis, ATS optimization, and role compatibility matching.**
@@ -51,15 +51,16 @@ RESUME AI is an enterprise-grade, cyber-themed candidate evaluation platform. It
 ## 🛠️ Tech Stack
 
 ### Frontend
-- **Framework:** Next.js 16.1 (App Router + Turbopack)
-- **Library:** React 19
+- **Framework & Build:** React 19 + Vite 6
+- **Language:** JavaScript (ES6+)
+- **Routing:** React Router v7 (`react-router-dom`)
 - **Styling:** Tailwind CSS v4 (Custom dark neon palette with `@theme`)
-- **UI Components:** Base UI (`@base-ui/react`), Lucide React, Sonner Toast Notifications
-- **Charts:** Recharts 3.8
+- **Icons & UI:** Lucide React, Sonner Toast Notifications
+- **Charts:** Recharts (Radar, Bar, Line charts)
 - **Animations:** Framer Motion & CSS Keyframe Scanners
 
 ### Backend
-- **Runtime:** Node.js (TypeScript)
+- **Runtime:** Node.js
 - **Framework:** Express.js 4
 - **Database:** MongoDB Atlas (Mongoose ODM)
 - **AI Integration:** `@google/generative-ai` SDK (Google Gemini 2.5 Flash)
@@ -124,9 +125,9 @@ cd frontend
 npm install
 ```
 
-Create a `.env.local` file in `frontend/`:
+Create a `.env` file in `frontend/`:
 ```env
-NEXT_PUBLIC_API_URL=http://localhost:5000/api
+VITE_API_URL=http://localhost:5000/api
 ```
 
 Run the frontend development server:
@@ -154,22 +155,20 @@ ai-resume-analyzer/
 │   └── uploads/             # Server storage for uploaded PDFs
 │
 ├── frontend/
-│   ├── public/              # Hero backgrounds, banners, and static assets
-│   └── src/
-│       ├── app/
-│       │   ├── (auth)/      # /login, /signup, /logout
-│       │   ├── dashboard/   # Main candidate hub
-│       │   ├── upload/      # Resume upload dropzone
-│       │   ├── results/[id]/# Deep analysis & radar visualization
-│       │   ├── match/       # Target job description matcher
-│       │   ├── history/     # Historical scans & snapshot archive
-│       │   ├── analytics/   # Trend visualization & aggregate metrics
-│       │   ├── support/     # Documentation & FAQs
-│       │   └── page.tsx     # Realistic landing page with live mockup
-│       ├── components/      # Navbar, Sidebar, MobileSidebar, UI components
-│       ├── context/         # AuthContext (JWT session management)
-│       ├── lib/             # Navigation items, styling utilities
-│       └── services/        # Axios API client
+│   ├── public/              # Hero backgrounds, banners, and favicon
+│   ├── src/
+│   │   ├── components/      # Navbar, Sidebar, BottomNav, UploadZone, UI primitives
+│   │   ├── context/         # AuthContext (React Context + JWT session state)
+│   │   ├── hooks/           # Custom React hooks (useCountUp)
+│   │   ├── lib/             # Navigation items, score utilities, styling helper
+│   │   ├── pages/           # LandingPage, LoginPage, SignupPage, DashboardPage,
+│   │   │                    # ResultsPage, MatchPage, HistoryPage, AnalyticsPage, SupportPage
+│   │   ├── services/        # Axios API client with auth interceptors
+│   │   ├── App.jsx          # React Router route definitions & ProtectedRoute guard
+│   │   ├── main.jsx         # React DOM root render
+│   │   └── index.css        # Tailwind CSS v4 styling & dark neon theme
+│   ├── index.html           # Single-page application HTML entrypoint
+│   └── vite.config.js       # Vite configuration & path aliases
 └── README.md
 ```
 
