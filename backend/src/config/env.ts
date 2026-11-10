@@ -12,7 +12,7 @@ export const config = {
   corsOrigin: process.env.FRONTEND_URL || process.env.CORS_ORIGIN || '*',
   geminiApiKey: process.env.GEMINI_API_KEY || process.env.OPENAI_API_KEY || '',
   // Redis configuration
-  useRedis: !!(process.env.REDIS_URL || process.env.REDIS_HOST),
+  useRedis: process.env.USE_REDIS === 'true' && !!(process.env.REDIS_URL || process.env.REDIS_HOST),
   redisUrl: process.env.REDIS_URL || '',
   redisHost: process.env.REDIS_HOST || 'localhost',
   redisPort: parseInt(process.env.REDIS_PORT || '6379', 10),

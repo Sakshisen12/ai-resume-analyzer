@@ -18,15 +18,29 @@ export default function SignupPage() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setIsLoading(true);
     setError(null);
+
+    // Client-side validation
+    if (password.length < 8) {
+      setError('PASSWORD MUST BE AT LEAST 8 CHARACTERS LONG.');
+      return;
+    }
+
+    setIsLoading(true);
 
     try {
       const response = await api.post('/auth/register', { name, email, password });
       const { token, data } = response.data;
       login(token, { id: data.user.id, name: data.user.name, email: data.user.email });
     } catch (err) {
-      setError(err.response?.data?.message || 'REGISTRATION FAILED. SYSTEM REJECTION.');
+      const message =
+        err.response?.data?.message ||
+        (err.code === 'ECONNABORTED'
+          ? 'SERVER TIMEOUT. BACKEND IS WAKING UP, PLEASE RETRY IN A FEW SECONDS.'
+          : err.message === 'Network Error'
+          ? 'CANNOT CONNECT TO BACKEND. PLEASE VERIFY THE BACKEND IS RUNNING.'
+          : 'REGISTRATION FAILED. SYSTEM REJECTION.');
+      setError(message);
     } finally {
       setIsLoading(false);
     }
@@ -95,12 +109,13 @@ export default function SignupPage() {
                   </div>
                   
                   <div className="space-y-3">
-                    <label htmlFor="password" className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim ml-1">SECRET KEY</label>
+                    <label htmlFor="password" className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim ml-1">SECRET KEY (MIN 8 CHARS)</label>
                     <Input
                       id="password"
                       type="password"
                       placeholder="••••••••"
                       required
+                      minLength={8}
                       autoComplete="new-password"
                       className="h-14 px-5 bg-bg-elevated/20 border-border-subtle hover:border-text-dim transition-colors"
                       value={password}

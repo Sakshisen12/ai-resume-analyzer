@@ -1,7 +1,19 @@
 import axios from 'axios';
 
+// Resolve API base URL: check VITE_API_URL, then localhost, then live Render backend
+const getBaseUrl = () => {
+  if (import.meta.env.VITE_API_URL) {
+    return import.meta.env.VITE_API_URL;
+  }
+  if (typeof window !== 'undefined' && window.location.hostname === 'localhost') {
+    return 'http://localhost:5000/api';
+  }
+  return 'https://ai-resume-analyzer-backend-80k8.onrender.com/api';
+};
+
 const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || 'http://localhost:5000/api',
+  baseURL: getBaseUrl(),
+  timeout: 30000,
   headers: {
     'Content-Type': 'application/json',
   },

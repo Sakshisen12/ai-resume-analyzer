@@ -25,7 +25,14 @@ export default function LoginPage() {
       const { token, data } = response.data;
       login(token, { id: data.user.id, name: data.user.name, email: data.user.email });
     } catch (err) {
-      setError(err.response?.data?.message || 'AUTHORIZATION FAILED. INVALID CREDENTIALS.');
+      const message =
+        err.response?.data?.message ||
+        (err.code === 'ECONNABORTED'
+          ? 'SERVER TIMEOUT. BACKEND IS WAKING UP, PLEASE RETRY IN A FEW SECONDS.'
+          : err.message === 'Network Error'
+          ? 'CANNOT CONNECT TO BACKEND. PLEASE VERIFY THE BACKEND IS RUNNING.'
+          : 'AUTHORIZATION FAILED. INVALID CREDENTIALS.');
+      setError(message);
     } finally {
       setIsLoading(false);
     }
