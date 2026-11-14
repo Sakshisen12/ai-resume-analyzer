@@ -130,7 +130,7 @@ export default function MatchPage() {
                   />
                   <div className="mt-6 flex flex-col sm:flex-row items-center justify-between gap-4">
                     <p className="text-xs text-text-dim">
-                      Gemini AI will perform a semantic keyword match & gap analysis against your uploaded resume.
+                      The AI engine will perform a semantic keyword match & gap analysis against your uploaded resume.
                     </p>
                     <Button 
                       variant="primary" 

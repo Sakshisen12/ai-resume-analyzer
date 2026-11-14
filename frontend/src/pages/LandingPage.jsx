@@ -81,7 +81,7 @@ export default function LandingPage() {
                     LAND YOUR <span className="text-text-dim">DREAM JOB</span> WITH <span className="text-lime-accent italic">AI</span> ANALYSIS.
                   </h1>
                   <p className="max-w-xl text-base text-text-secondary md:text-lg leading-relaxed font-body">
-                    Transform your resume into a top 1% candidate profile. Instant ATS compatibility scoring, deep skills gap detection, and personalized recommendations powered by Google Gemini.
+                    Transform your resume into a top 1% candidate profile. Instant ATS compatibility scoring, deep skills gap detection, and personalized recommendations powered by advanced AI.
                   </p>
                 </div>
 
@@ -206,7 +206,7 @@ export default function LandingPage() {
         <section className="border-b border-border-subtle bg-bg-secondary/60">
           <div className="mx-auto max-w-[1280px] flex flex-col md:flex-row">
             {[
-              { label: "AI ENGINE", value: "GEMINI 2.5 FLASH", hint: "Sub-second analysis" },
+              { label: "ANALYSIS SPEED", value: "< 2 SECONDS", hint: "Real-time AI audit" },
               { label: "RESUMES SCANNED", value: "50,000+", hint: "Across 40+ countries" },
               { label: "SUCCESS RATE", value: "92% ATS PASS", hint: "Bypasses automated filters" },
               { label: "AVG. SCORE GAIN", value: "+34 POINTS", hint: "After recommended edits" },
@@ -261,7 +261,7 @@ export default function LandingPage() {
                   step: "02",
                   icon: <Zap size={24} className="text-lime-accent" />,
                   title: "DEEP AI SEMANTIC AUDIT",
-                  desc: "Google Gemini scans your resume against modern ATS algorithms, scoring action verbs, measurable impact metrics, and technical competency coverage."
+                  desc: "Advanced neural algorithms scan your resume against modern ATS benchmarks, scoring action verbs, measurable impact metrics, and technical competency coverage."
                 },
                 {
                   step: "03",
@@ -459,7 +459,7 @@ export default function LandingPage() {
             RESUME<span className="text-lime-accent">AI</span>
           </span>
           <span className="text-[10px] font-mono text-text-dim ml-2">
-            // POWERED BY GEMINI AI
+            // POWERED BY NEURAL AI
           </span>
         </div>
         

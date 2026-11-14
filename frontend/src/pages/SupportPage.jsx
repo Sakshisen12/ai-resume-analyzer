@@ -19,7 +19,7 @@ import {
 const FAQS = [
   {
     question: "HOW IS THE RESUME SCORE CALCULATED?",
-    answer: "ResumeAI evaluates your resume using Google Gemini AI against modern industry recruiting benchmarks. The overall score (0–100) factors in content impact, action-verb usage, quantifiable achievements, formatting readability, and ATS keyword relevance."
+    answer: "ResumeAI evaluates your resume using advanced neural AI models against modern industry recruiting benchmarks. The overall score (0–100) factors in content impact, action-verb usage, quantifiable achievements, formatting readability, and ATS keyword relevance."
   },
   {
     question: "WHAT IS ATS COMPATIBILITY?",
@@ -69,7 +69,7 @@ export default function SupportPage() {
                     AI ENGINE STATUS
                   </h3>
                   <p className="text-xs text-text-secondary leading-relaxed">
-                    Powered by Google Gemini generative models with multi-model fallback for 99.9% uptime.
+                    Powered by multi-model neural AI architecture with automated failover for 99.9% uptime.
                   </p>
                 </div>
                 <div className="pt-4 mt-4 border-t border-border-subtle flex items-center justify-between text-[10px] font-mono">

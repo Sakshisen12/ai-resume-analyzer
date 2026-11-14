@@ -161,7 +161,7 @@ export default function DashboardPage() {
             </h3>
             <div className="space-y-4">
               {[
-                { label: "GEMINI 2.5 FLASH", status: "ACTIVE" },
+                { label: "AI PARSER ENGINE", status: "ACTIVE" },
                 { label: "ATS PARSER V4", status: "ONLINE" },
                 { label: "CREDITS REMAINING", status: "UNLIMITED" },
               ].map((s) => (

@@ -93,7 +93,7 @@ export default function Navbar() {
               <span className="relative inline-flex rounded-full h-2 w-2 bg-lime-accent"></span>
             </span>
             <span className="text-[10px] font-mono uppercase tracking-wider text-text-secondary flex items-center gap-1">
-              Gemini 2.5 Active
+              AI Engine Active
             </span>
           </div>
         </div>
@@ -178,7 +178,7 @@ export default function Navbar() {
                   <div className="px-3 py-2 rounded-md bg-bg-primary/50 border border-border-subtle/60 flex items-center justify-between text-[10px] font-mono my-1">
                     <span className="text-text-dim uppercase tracking-wider">AI Access</span>
                     <span className="text-lime-accent font-semibold flex items-center gap-1">
-                      <Sparkles size={11} /> Unlimited Gemini
+                      <Sparkles size={11} /> Unlimited AI Scans
                     </span>
                   </div>
 
