@@ -39,7 +39,7 @@ export default function LoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4 py-20 relative overflow-hidden">
+    <div className="min-h-screen flex items-center justify-center bg-bg-primary px-4 pt-6 pb-12 md:pt-10 md:pb-16 relative overflow-hidden">
       {/* Editorial Background Text */}
       <div className="absolute inset-0 flex items-center justify-center pointer-events-none select-none overflow-hidden">
         <h1 className="font-display text-[25vw] font-black leading-none text-bg-elevated/5 italic tracking-tighter uppercase">
@@ -51,10 +51,10 @@ export default function LoginPage() {
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="w-full max-w-md z-10"
+        className="w-full max-w-md z-10 -translate-y-3 md:-translate-y-6"
       >
-        <div className="space-y-12">
-          <div className="text-center space-y-4">
+        <div className="space-y-6 md:space-y-8">
+          <div className="text-center space-y-3">
              <Link to="/" className="inline-block">
                <span className="font-display text-4xl font-black text-text-primary italic tracking-tight uppercase group">
                  RESUME<span className="text-lime-accent">AI.</span>
@@ -64,16 +64,16 @@ export default function LoginPage() {
           </div>
 
           <Card className="bg-bg-secondary border-border-subtle shadow-[0_32px_64px_-12px_rgba(0,0,0,0.8)]">
-            <CardContent className="p-8 lg:p-12">
-              <form onSubmit={handleSubmit} className="space-y-8">
+            <CardContent className="p-6 md:p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
                 {error && (
                   <div className="p-4 border border-red-500/30 bg-red-500/5 text-red-500 font-mono text-[10px] uppercase tracking-widest leading-relaxed">
                     ERROR: {error}
                   </div>
                 )}
                 
-                <div className="space-y-6">
-                  <div className="space-y-3">
+                <div className="space-y-4">
+                  <div className="space-y-2">
                     <label htmlFor="email" className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim ml-1">USER IDENTIFIER</label>
                     <Input
                       id="email"
@@ -81,13 +81,13 @@ export default function LoginPage() {
                       placeholder="NAME@SYSTEM.COM"
                       required
                       autoComplete="email"
-                      className="h-14 px-5 bg-bg-elevated/20 border-border-subtle hover:border-text-dim transition-colors uppercase font-mono text-xs tracking-widest"
+                      className="h-12 px-4 bg-bg-elevated/20 border-border-subtle hover:border-text-dim transition-colors uppercase font-mono text-xs tracking-widest"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
                   
-                  <div className="space-y-3">
+                  <div className="space-y-2">
                     <div className="flex justify-between items-center px-1">
                       <label htmlFor="password" className="font-mono text-[10px] font-bold uppercase tracking-widest text-text-dim">SECRET KEY</label>
                     </div>
@@ -97,7 +97,7 @@ export default function LoginPage() {
                       placeholder="••••••••"
                       required
                       autoComplete="current-password"
-                      className="h-14 px-5 bg-bg-elevated/20 border-border-subtle hover:border-text-dim transition-colors"
+                      className="h-12 px-4 bg-bg-elevated/20 border-border-subtle hover:border-text-dim transition-colors"
                       value={password}
                       onChange={(e) => setPassword(e.target.value)}
                     />
@@ -107,7 +107,7 @@ export default function LoginPage() {
                 <Button 
                   type="submit" 
                   variant="primary"
-                  className="w-full h-16 text-xs tracking-[0.2em]"
+                  className="w-full h-14 text-xs tracking-[0.2em]"
                   disabled={isLoading}
                 >
                   {isLoading ? (
