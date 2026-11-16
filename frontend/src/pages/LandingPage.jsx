@@ -13,7 +13,8 @@ import {
   LineChart, 
   Sparkles,
   ArrowRight,
-  Star
+  Star,
+  CheckCircle2
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -414,38 +415,116 @@ export default function LandingPage() {
         </section>
 
         {/* CTA Section */}
-        <section className="relative py-28 lg:py-36 overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none opacity-20">
-            <div 
-              className="absolute inset-0 bg-cover bg-center mix-blend-luminosity"
-              style={{ backgroundImage: "url('/hero-tech-bg.jpg')" }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-bg-primary via-bg-primary/95 to-bg-primary" />
+        <section className="relative py-24 lg:py-32 overflow-hidden border-t border-border-subtle">
+          {/* Clean Subtle Grid Pattern (No AI-generated stock image) */}
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff05_1px,transparent_1px),linear-gradient(to_bottom,#ffffff05_1px,transparent_1px)] bg-[size:3rem_3rem]" />
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-lime-accent/10 blur-[120px] rounded-full" />
           </div>
 
           <div className="relative z-10 mx-auto max-w-[1280px] px-4 lg:px-8">
-            <div className="bg-bg-secondary/90 border border-border-subtle p-12 lg:p-20 rounded-2xl relative overflow-hidden backdrop-blur-xl">
-              <div className="relative z-10 space-y-6 max-w-2xl">
-                <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-lime-accent">
-                  GET STARTED IN 60 SECONDS
-                </span>
-                <h2 className="font-display text-4xl md:text-6xl font-black tracking-tighter text-text-primary uppercase leading-tight">
-                  READY TO BUILD AN <span className="text-lime-accent italic">UNBEATABLE</span> RESUME?
-                </h2>
-                <p className="text-base text-text-secondary font-body leading-relaxed">
-                  Upload your PDF and get instant ATS compatibility scores, skill gap analysis, and tailored recommendations.
-                </p>
-                <div className="pt-2">
-                  <Link to="/signup">
-                    <Button size="lg" className="h-14 px-10 text-sm tracking-widest font-mono font-bold shadow-[0_0_30px_-5px_rgba(190,242,100,0.3)]">
-                      START ANALYZING FOR FREE <ArrowRight className="ml-2 h-4 w-4" />
-                    </Button>
-                  </Link>
+            <div className="bg-bg-secondary/95 border border-border-normal p-8 sm:p-12 lg:p-16 rounded-2xl relative overflow-hidden backdrop-blur-xl shadow-2xl">
+              <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
+                {/* Left Column: CTA Content */}
+                <div className="space-y-6">
+                  <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-lime-accent">
+                    GET STARTED IN 60 SECONDS
+                  </span>
+                  <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-black tracking-tighter text-text-primary uppercase leading-tight">
+                    READY TO BUILD AN <span className="text-lime-accent italic">UNBEATABLE</span> RESUME?
+                  </h2>
+                  <p className="text-sm sm:text-base text-text-secondary font-body leading-relaxed max-w-xl">
+                    Upload your PDF and get instant ATS compatibility scores, skill gap analysis, and tailored recommendations.
+                  </p>
+                  <div className="pt-2 flex flex-col sm:flex-row gap-4">
+                    <Link to="/signup" className="w-full sm:w-auto">
+                      <Button size="lg" className="w-full sm:w-auto h-14 px-8 text-xs tracking-widest font-mono font-bold shadow-[0_0_30px_-5px_rgba(190,242,100,0.3)]">
+                        START ANALYZING FOR FREE <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
+                    </Link>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="absolute right-0 top-0 bottom-0 w-1/3 hidden lg:flex items-center justify-center opacity-10 pointer-events-none">
-                <Sparkles size={360} className="text-lime-accent" />
+
+                {/* Right Column: Realistic Live ATS Verification Preview (Replaces AI Sparkle Logo) */}
+                <div className="relative">
+                  <div className="absolute -inset-1 rounded-xl bg-gradient-to-r from-lime-accent/20 via-transparent to-lime-accent/10 blur-xl opacity-60" />
+                  
+                  <div className="relative rounded-xl border border-border-subtle bg-bg-primary/95 p-6 sm:p-7 shadow-2xl">
+                    {/* File Header */}
+                    <div className="flex items-center justify-between pb-4 border-b border-border-subtle">
+                      <div className="flex items-center gap-3">
+                        <div className="h-10 w-10 rounded-lg bg-lime-accent/10 border border-lime-accent/30 flex items-center justify-center text-lime-accent">
+                          <FileText size={20} />
+                        </div>
+                        <div>
+                          <div className="text-xs font-mono font-bold text-text-primary uppercase tracking-wider">
+                            CANDIDATE_RESUME.PDF
+                          </div>
+                          <div className="text-[10px] font-mono text-text-dim">
+                            Verified Machine-Readable Format
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-2xl font-black font-display text-lime-accent leading-none">
+                          96<span className="text-xs font-mono text-text-dim font-normal">/100</span>
+                        </div>
+                        <span className="text-[9px] font-mono font-bold text-lime-accent uppercase tracking-widest">
+                          TOP 2% TIER
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Progress Metrics */}
+                    <div className="py-4 space-y-3">
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[11px] font-mono">
+                          <span className="text-text-secondary">ATS System Compatibility</span>
+                          <span className="font-bold text-text-primary">98%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-bg-elevated rounded-full overflow-hidden">
+                          <div className="h-full bg-lime-accent rounded-full" style={{ width: '98%' }} />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[11px] font-mono">
+                          <span className="text-text-secondary">Measurable Impact & Metrics</span>
+                          <span className="font-bold text-text-primary">92%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-bg-elevated rounded-full overflow-hidden">
+                          <div className="h-full bg-lime-accent/80 rounded-full" style={{ width: '92%' }} />
+                        </div>
+                      </div>
+
+                      <div className="space-y-1">
+                        <div className="flex justify-between text-[11px] font-mono">
+                          <span className="text-text-secondary">Industry Keyword Density</span>
+                          <span className="font-bold text-text-primary">95%</span>
+                        </div>
+                        <div className="h-1.5 w-full bg-bg-elevated rounded-full overflow-hidden">
+                          <div className="h-full bg-lime-accent/80 rounded-full" style={{ width: '95%' }} />
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Verified Checklist */}
+                    <div className="pt-3 border-t border-border-subtle space-y-2">
+                      <div className="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                        <CheckCircle2 size={14} className="text-lime-accent shrink-0" />
+                        <span>Passed Greenhouse, Lever & Workday screening</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                        <CheckCircle2 size={14} className="text-lime-accent shrink-0" />
+                        <span>16 high-impact action verbs detected</span>
+                      </div>
+                      <div className="flex items-center gap-2 text-xs font-mono text-text-secondary">
+                        <CheckCircle2 size={14} className="text-lime-accent shrink-0" />
+                        <span>Zero formatting red flags or table errors</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
